@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char **argv){
 
 	if(argc < 4){
-		cout << "Usage : ./MyClient <IP> <port> <intToSend>" << endl;
+		cout << "Usage : ./MyClient <IP> <port> <N=EndLoop>" << endl;
 		exit(1);
 	}
 
@@ -24,8 +24,8 @@ int main(int argc, char **argv){
 	const char* ip = argv[1];
 	//Server port
 	int port = atoi(argv[2]);
-	//Message to send
-	int message = atoi(argv[3]);
+	//End of Loop
+	int N = atoi(argv[3]);
 
 	
 
@@ -53,13 +53,16 @@ int main(int argc, char **argv){
 
 
 	//Send the int message
-	cout << "Sending the message : " << message << " ..." << endl;
-	if(sendto(sock, &message, sizeof(message), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){
-		perror("sendto failed");
-		exit(1);
-	}
+	for(int i=1; i<=N; i++){
+		cout << "Sending the message : " << i << " ..." << endl;
+		if(sendto(sock, &i, sizeof(i), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){
+			perror("sendto failed");
+			exit(1);
+		}
 
-	cout << "Message sent" << endl;
+		cout << "\tMessage sent" << endl;
+	}
+	
 
 	exit(0);
 }

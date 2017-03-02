@@ -27,7 +27,8 @@ int main(int argc, char **argv){
 	int message;
 	//Length of the message recived
 	int messageLength;
-
+	//Total to print
+	int total = 0;
 
 	//Create the socket
 		//AF_INET = IPv4
@@ -57,11 +58,16 @@ int main(int argc, char **argv){
 	cout << "Socket binded" << endl;
 
 
-	//Reception d'un INT
-	cout << "Waiting for a message ..."<< endl;
-	messageLength = recvfrom(sock, &message, sizeof(int), 0, NULL, NULL);
-	cout << "Message received : " << messageLength << " bytes" << endl;
-	cout << message << endl;
+	while(true){
+		//Reception d'un INT
+		cout << "Waiting for a message ..."<< endl;
+		messageLength = recvfrom(sock, &message, sizeof(int), 0, NULL, NULL);
+		cout << "\tMessage received : " << messageLength << " bytes" << endl;
+		cout << "\tMessage : " << message << endl;
+		
+		total += message;
+		cout << "\tNew total : " << total << endl;;
+	}
 
 	exit(0);
 }
