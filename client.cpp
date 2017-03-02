@@ -14,12 +14,17 @@ int main(int argc, char **argv){
 		exit(1);
 	}
 
+	//Socket descriptor
 	int sock;
 
+	//Addr Infos
 	struct sockaddr_in addserv;
 
+	//Server IP
 	const char* ip = argv[1];
+	//Server port
 	int port = atoi(argv[2]);
+	//Message to send
 	int message = atoi(argv[3]);
 
 	

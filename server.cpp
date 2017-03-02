@@ -15,7 +15,7 @@ int main(int argc, char **argv){
 	}
 
 
-	//Socet descriptor
+	//Socket descriptor
 	int sock;
 
 	//Addr Info
