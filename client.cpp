@@ -51,8 +51,7 @@ int main(int argc, char **argv){
 	inet_pton(AF_INET, ip, &(addserv.sin_addr));
 
 
-
-	//Send the int message
+	//Send the INT message
 	for(int i=1; i<=N; i++){
 		cout << "Sending the message : " << i << " ..." << endl;
 		if(sendto(sock, &i, sizeof(i), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){

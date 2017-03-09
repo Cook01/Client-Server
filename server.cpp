@@ -40,7 +40,7 @@ int main(int argc, char **argv){
 	cout << "Created socket : descriptor = " << sock << endl;
 
 
-	//define the network representation
+	//Define the network representation
 		//AF_INET = IPv4
 		//htonl = int to addr -- (ntohl = addr to int)
 		//htons = int to port -- (ntohs = port to int)
@@ -59,9 +59,11 @@ int main(int argc, char **argv){
 
 
 	while(true){
-		//Reception d'un INT
+		//Waiting for an INT
 		cout << "Waiting for a message ..."<< endl;
 		messageLength = recvfrom(sock, &message, sizeof(int), 0, NULL, NULL);
+
+		//Printing message datas
 		cout << "\tMessage received : " << messageLength << " bytes" << endl;
 		cout << "\tMessage : " << message << endl;
 		
