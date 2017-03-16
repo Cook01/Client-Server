@@ -9,8 +9,8 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-	if(argc < 4){
-		cout << "Usage : ./MyClient <IP> <port> <N=EndLoop>" << endl;
+	if(argc < 3){
+		cout << "Usage : ./MyClient <IP> <port>" << endl;
 		exit(1);
 	}
 
@@ -24,8 +24,9 @@ int main(int argc, char **argv){
 	const char* ip = argv[1];
 	//Server port
 	int port = atoi(argv[2]);
-	//End of Loop
-	int N = atoi(argv[3]);
+
+	//Message to send
+	int message = 0;
 
 	
 
@@ -50,18 +51,25 @@ int main(int argc, char **argv){
 	//Set the IP
 	inet_pton(AF_INET, ip, &(addserv.sin_addr));
 
-
-	//Send the INT message
-	for(int i=1; i<=N; i++){
-		cout << "Sending the message : " << i << " ..." << endl;
-		if(sendto(sock, &i, sizeof(i), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){
-			perror("sendto failed");
-			exit(1);
-		}
-
-		cout << "\tMessage sent" << endl;
+	//Send the int message
+	cout << "Message n°1 to send : ";
+	cin >> message;
+	cout << endl;
+	cout << "\tSending the message : " << message << " ..." << endl;
+	if(sendto(sock, &message, sizeof(message), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){
+		perror("sendto failed");
+		exit(1);
 	}
-	
+	cout << "\tMessage sent" << endl;
+
+	cout << "Message n°2 to send : ";
+	cin >> message;
+	cout << "\tSending the message : " << message << " ..." << endl;
+	if(sendto(sock, &message, sizeof(message), 0, (struct sockaddr *)&addserv, sizeof(addserv)) < 0){
+		perror("sendto failed");
+		exit(1);
+	}
+	cout << "\tMessage sent" << endl;
 
 	exit(0);
 }

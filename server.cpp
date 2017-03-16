@@ -9,8 +9,8 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-	if(argc < 2){
-		cout << "Usage : ./MyServer <port>" << endl;
+	if(argc < 3){
+		cout << "Usage : ./MyServer <port> <nb octet to read>" << endl;
 		exit(1);
 	}
 
@@ -23,6 +23,9 @@ int main(int argc, char **argv){
 	//Port
 	int port = atoi(argv[1]);
 
+	//Nb octet
+	int nbOctet = atoi(argv[2]);
+	int nbByte = nbOctet*8;
 	//Message to recive buffer
 	int message;
 	//Length of the message recived
@@ -33,7 +36,7 @@ int main(int argc, char **argv){
 	//Create the socket
 		//AF_INET = IPv4
 		//SOCK_DGRAM = Datagram (UDP)
-	if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+	if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
 		perror("cannot create socket");
 		exit(1);
 	}
@@ -58,18 +61,17 @@ int main(int argc, char **argv){
 	cout << "Socket binded" << endl;
 
 
-	while(true){
-		//Waiting for an INT
+	do{
+		//Reception d'un INT
 		cout << "Waiting for a message ..."<< endl;
-		messageLength = recvfrom(sock, &message, sizeof(int), 0, NULL, NULL);
-
-		//Printing message datas
+		messageLength = recvfrom(sock, &message, nbByte, 0, NULL, NULL);
 		cout << "\tMessage received : " << messageLength << " bytes" << endl;
-		cout << "\tMessage : " << message << endl;
-		
-		total += message;
-		cout << "\tNew total : " << total << endl;;
-	}
+		cout << "\t" << message << endl;
+
+		nbByte -= messageLength;
+		cout << "\tNb bytes left to read : " << nbByte << endl;
+
+	} while(nbByte > 0);
 
 	exit(0);
 }
